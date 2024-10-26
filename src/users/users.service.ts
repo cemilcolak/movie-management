@@ -6,11 +6,11 @@ import * as bcrypt from 'bcrypt';
 import {InjectRepository} from "@nestjs/typeorm";
 
 @Injectable()
-export class UserService {
+export class UsersService {
 
     constructor(
         @InjectRepository(User)
-        private userRepository: Repository<User>, // Burada Repository'i ekliyoruz
+        private userRepository: Repository<User>,
     ) {
     }
 
@@ -26,6 +26,10 @@ export class UserService {
         });
 
         return this.userRepository.save(user);
+    }
+
+    async findOneById(id: number): Promise<User | undefined> {
+        return this.userRepository.findOne({where: {id}});
     }
 
     async findByUsername(username: string): Promise<User | undefined> {

@@ -5,12 +5,14 @@ import {Movie} from './entities/movie.entity';
 import {ApiTags, ApiResponse, ApiOperation} from '@nestjs/swagger';
 import {RolesGuard} from "../auth/guards/roles.guard";
 import {Roles} from "../auth/decorators/roles.decorator";
-import {UserRole} from "../user/entities/user.entity";
+import {UserRole} from "../users/entities/user.entity";
 import {CreateSessionDto} from "./dto/create-session.dto";
 import {Session} from "./entities/session.entity";
+import {JwtAuthGuard} from "../auth/guards/jwt-auth.guard";
 
 @ApiTags('movies')
 @Controller('movies')
+@UseGuards(JwtAuthGuard) // Use the JwtAuthGuard for this controller
 @UseGuards(RolesGuard) // Use the RolesGuard for this controller
 export class MoviesController {
     constructor(private readonly moviesService: MoviesService) {

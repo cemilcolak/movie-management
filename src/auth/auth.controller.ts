@@ -1,7 +1,7 @@
 import {Controller, Post, Body} from '@nestjs/common';
 import {ApiOperation, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {AuthService} from './auth.service';
-import {CreateUserDto} from '../user/dto/create-user.dto';
+import {CreateUserDto} from '../users/dto/create-user.dto';
 
 @ApiTags('auth') // Grouping under "auth" in Swagger UI
 @Controller('auth')
