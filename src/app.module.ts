@@ -6,6 +6,7 @@ import {TypeOrmModule} from '@nestjs/typeorm';
 import {UserModule} from './user/user.module';
 import {AuthModule} from './auth/auth.module';
 import {join} from 'path';
+import { MoviesModule } from './movies/movies.module';
 
 
 @Module({
@@ -30,6 +31,7 @@ import {join} from 'path';
         }),
         UserModule,
         AuthModule,
+        MoviesModule,
     ],
     controllers: [AppController],
     providers: [AppService],
