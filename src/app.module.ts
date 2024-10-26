@@ -7,10 +7,14 @@ import {UserModule} from './user/user.module';
 import {AuthModule} from './auth/auth.module';
 import {join} from 'path';
 import { MoviesModule } from './movies/movies.module';
+import {DevtoolsModule} from "@nestjs/devtools-integration";
 
 
 @Module({
     imports: [
+        DevtoolsModule.register({
+          http: process.env.NODE_ENV !== 'production',
+        }),
         ConfigModule.forRoot({
             isGlobal: true, // Makes ConfigModule available globally
         }),
