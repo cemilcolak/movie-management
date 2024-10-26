@@ -1,5 +1,6 @@
-import {Entity, Column, PrimaryGeneratedColumn, ManyToOne} from 'typeorm';
-import {Movie} from './movie.entity';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { Movie } from './movie.entity';
+import {TimeSlot} from "../dto/create-session.dto";
 
 @Entity()
 export class Session {
@@ -7,13 +8,13 @@ export class Session {
     id: number;
 
     @Column()
-    date: string; // Use an appropriate format (e.g., YYYY-MM-DD)
+    date: Date; // Change to Date for consistency
 
     @Column()
-    timeSlot: string;
+    timeSlot: TimeSlot; // Change to TimeSlot enum type
 
     @Column()
-    roomNumber: string;
+    roomNumber: number; // Change to number for consistency
 
     @ManyToOne(() => Movie, movie => movie.sessions)
     movie: Movie;

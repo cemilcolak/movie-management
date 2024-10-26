@@ -6,6 +6,8 @@ import {ApiTags, ApiResponse, ApiOperation} from '@nestjs/swagger';
 import {RolesGuard} from "../auth/guards/roles.guard";
 import {Roles} from "../auth/decorators/roles.decorator";
 import {UserRole} from "../user/entities/user.entity";
+import {CreateSessionDto} from "./dto/create-session.dto";
+import {Session} from "./entities/session.entity";
 
 @ApiTags('movies')
 @Controller('movies')
@@ -50,5 +52,34 @@ export class MoviesController {
     @ApiResponse({status: 204, description: 'The movie has been successfully deleted.'})
     async remove(@Param('id') id: number): Promise<void> {
         return this.moviesService.remove(id);
+    }
+
+    @Post(':id/sessions')
+    @Roles(UserRole.MANAGER)
+    @ApiOperation({summary: 'Create a new session for a movie'})
+    @ApiResponse({status: 201, description: 'The session has been successfully created.', type: Session})
+    @ApiResponse({status: 404, description: 'Movie not found.'})
+    async createSession(
+        @Param('id') movieId: number,
+        @Body() createSessionDto: CreateSessionDto,
+    ): Promise<Session> {
+        return this.moviesService.createSession(movieId, createSessionDto);
+    }
+
+    @Get(':id/sessions')
+    @ApiOperation({summary: 'Get all sessions for a movie'})
+    @ApiResponse({status: 200, description: 'List of sessions for the movie.', type: [Session]})
+    @ApiResponse({status: 404, description: 'Movie not found.'})
+    async getSessions(@Param('id') movieId: number): Promise<Session[]> {
+        return this.moviesService.getSessions(movieId);
+    }
+
+    @Delete('sessions/:sessionId')
+    @Roles(UserRole.MANAGER)
+    @ApiOperation({summary: 'Delete a session by ID'})
+    @ApiResponse({status: 204, description: 'The session has been successfully deleted.'})
+    @ApiResponse({status: 404, description: 'Session not found.'})
+    async deleteSession(@Param('sessionId') sessionId: number): Promise<void> {
+        return this.moviesService.deleteSession(sessionId);
     }
 }
