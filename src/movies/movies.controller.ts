@@ -12,8 +12,7 @@ import {JwtAuthGuard} from "../auth/guards/jwt-auth.guard";
 
 @ApiTags('movies')
 @Controller('movies')
-@UseGuards(JwtAuthGuard) // Use the JwtAuthGuard for this controller
-@UseGuards(RolesGuard) // Use the RolesGuard for this controller
+@UseGuards(JwtAuthGuard, RolesGuard) // Use the JwtAuthGuard and RolesGuard  for this controller
 export class MoviesController {
     constructor(private readonly moviesService: MoviesService) {
     }
