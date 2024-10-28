@@ -12,6 +12,14 @@ async function bootstrap() {
         .setTitle('Movie Management API')
         .setDescription('The movie management API description')
         .setVersion('1.0')
+        .addBearerAuth(
+            {
+                type: 'http',
+                scheme: 'bearer',
+                bearerFormat: 'JWT',  // Optional but clarifies format
+            },
+            'accessToken',  // Give this auth a unique name
+        )
         .build();
 
     const document = SwaggerModule.createDocument(app, config);

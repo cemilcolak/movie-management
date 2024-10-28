@@ -2,7 +2,7 @@ import {Controller, Post, Get, Patch, Delete, Param, Body, UseGuards} from '@nes
 import {MoviesService} from './movies.service';
 import {CreateMovieDto} from './dto/create-movie.dto';
 import {Movie} from './entities/movie.entity';
-import {ApiTags, ApiResponse, ApiOperation} from '@nestjs/swagger';
+import {ApiTags, ApiResponse, ApiOperation, ApiBearerAuth} from '@nestjs/swagger';
 import {RolesGuard} from "../auth/guards/roles.guard";
 import {Roles} from "../auth/decorators/roles.decorator";
 import {UserRole} from "../users/entities/user.entity";
@@ -11,6 +11,7 @@ import {Session} from "./entities/session.entity";
 import {JwtAuthGuard} from "../auth/guards/jwt-auth.guard";
 
 @ApiTags('movies')
+@ApiBearerAuth('accessToken')
 @Controller('movies')
 @UseGuards(JwtAuthGuard, RolesGuard) // Use the JwtAuthGuard and RolesGuard  for this controller
 export class MoviesController {

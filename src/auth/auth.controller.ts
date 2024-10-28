@@ -1,7 +1,8 @@
 import {Controller, Post, Body} from '@nestjs/common';
-import {ApiOperation, ApiResponse, ApiTags} from '@nestjs/swagger';
+import {ApiBearerAuth, ApiOperation, ApiResponse, ApiTags} from '@nestjs/swagger';
 import {AuthService} from './auth.service';
 import {CreateUserDto} from '../users/dto/create-user.dto';
+import {LoginAuthDto} from "./dto/login-auth.dto";
 
 @ApiTags('auth') // Grouping under "auth" in Swagger UI
 @Controller('auth')
@@ -20,7 +21,7 @@ export class AuthController {
     @ApiOperation({summary: 'User login'}) // Description for the operation
     @ApiResponse({status: 200, description: 'Successful login.'}) // Successful response
     @ApiResponse({status: 401, description: 'Unauthorized.'}) // Error response
-    async login(@Body() body: { username: string; password: string }) {
-        return this.authService.login(body.username, body.password);
+    async login(@Body() loginAuthDto: LoginAuthDto) {
+        return this.authService.login(loginAuthDto);
     }
 }
